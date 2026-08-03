@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dental Clinics CRM — Sheikh Zayed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0d0f14;
+    --surface:  #13161d;
+    --panel:    #1a1e28;
+    --border:   #ffffff0d;
+    --text:     #e8eaf0;
+    --muted:    #6b7280;
+    --radius:   10px;
+
+    --c1: #3b82f6;  --c1-card: #0e1a2d;  --c1-pin: #1d2d44;   /* blue   */
+    --c2: #a855f7;  --c2-card: #160d24;  --c2-pin: #1e1133;   /* violet */
+    --c3: #10b981;  --c3-card: #0a1f18;  --c3-pin: #0f2a20;   /* emerald */
+    --c4: #f59e0b;  --c4-card: #1a1104;  --c4-pin: #261900;   /* amber  */
+    --c5: #22d3ee;  --c5-card: #061a1f;  --c5-pin: #0a2228;   /* cyan   */
+    --c6: #f87171;  --c6-card: #1f0a0a;  --c6-pin: #2a1010;   /* red    */
+  }
+
+  html { font-size: 15px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 26px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    gap: 14px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -.5px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-pip {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--c1);
+    box-shadow: 0 0 10px var(--c1);
+  }
+
+  .hdr-right { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+
+  .pills { display:flex; gap:7px; flex-wrap:wrap; }
+  .pill {
+    display:flex; align-items:center; gap:5px;
+    font-size:.73rem; font-weight:500;
+    color:var(--muted); background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:20px; padding:4px 11px; white-space:nowrap;
+  }
+  .pill b { color:var(--text); font-weight:700; }
+  .pip { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+
+  .btn-import {
+    position:relative; display:inline-flex; align-items:center; gap:7px;
+    padding:8px 18px;
+    font-family:'DM Sans',sans-serif; font-size:.83rem; font-weight:600;
+    color:#fff; background:var(--c1); border:none;
+    border-radius:var(--radius); cursor:pointer;
+    transition:background .2s, box-shadow .2s, transform .1s;
+    box-shadow:0 0 18px #3b82f628; white-space:nowrap;
+  }
+  .btn-import:hover  { background:#2563eb; box-shadow:0 0 26px #3b82f650; }
+  .btn-import:active { transform:scale(.97); }
+  .btn-import input[type="file"] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; }
+
+  .btn-clear {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:8px 14px;
+    font-family:'DM Sans',sans-serif; font-size:.81rem; font-weight:500;
+    color:var(--muted); background:var(--panel);
+    border:1px solid var(--border); border-radius:var(--radius);
+    cursor:pointer; transition:all .2s; white-space:nowrap;
+  }
+  .btn-clear:hover { color:#ef4444; border-color:#ef444440; background:#1a0b0b; }
+
+  .btn-secondary {
+    display:inline-flex; align-items:center; gap:7px;
+    padding:8px 14px;
+    font-family:'DM Sans',sans-serif; font-size:.81rem; font-weight:500;
+    color:var(--text); background:var(--panel);
+    border:1px solid var(--border); border-radius:var(--radius);
+    cursor:pointer; transition:all .2s; white-space:nowrap;
+  }
+  .btn-secondary:hover { border-color:#ffffff22; background:#1e2230; }
+
+  .search-wrap {
+    position:relative; display:flex; align-items:center;
+  }
+  .search-wrap svg {
+    position:absolute; left:10px; color:var(--muted); pointer-events:none;
+  }
+  .search-input {
+    width:180px; padding:7px 12px 7px 32px;
+    font-family:'DM Sans',sans-serif; font-size:.81rem;
+    color:var(--text); background:var(--panel);
+    border:1px solid var(--border); border-radius:var(--radius);
+    outline:none; transition:border-color .2s, width .2s;
+  }
+  .search-input:focus { border-color:#3b82f650; width:220px; }
+  .search-input::placeholder { color:var(--muted); }
+
+  /* ── BOARD ── */
+  .board {
+    flex:1; display:flex; gap:18px;
+    padding:22px 22px 40px;
+    overflow-x:auto; align-items:flex-start;
+  }
+
+  /* ── COLUMN ── */
+  .col {
+    flex:0 0 318px;
+    display:flex; flex-direction:column;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background:var(--panel);
+    min-height:180px;
+    transition:outline .12s;
+  }
+  .col.drag-over {
+    outline:2px dashed var(--accent);
+    outline-offset:-2px;
+  }
+
+  .col-head {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:15px 16px 13px; border-bottom:1px solid var(--border); gap:10px;
+  }
+  .col-title-row { display:flex; align-items:center; gap:9px; }
+  .col-bar {
+    width:4px; height:22px; border-radius:4px; flex-shrink:0;
+    background:var(--accent); box-shadow:0 0 10px var(--accent);
+  }
+  .col-title {
+    font-family:'Syne',sans-serif; font-size:.88rem; font-weight:700;
+    color:var(--text); line-height:1.25;
+  }
+  .col-sub { font-size:.71rem; font-weight:400; color:var(--accent); opacity:.85; }
+  .col-count {
+    font-size:.72rem; font-weight:700; color:var(--accent);
+    background:color-mix(in srgb,var(--accent) 12%,transparent);
+    border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);
+    padding:2px 9px; border-radius:20px; min-width:26px;
+    text-align:center; flex-shrink:0;
+  }
+
+  /* ── PINNED BOX ── */
+  .pin-box {
+    margin:13px 13px 0;
+    border-radius:10px;
+    border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);
+    background:var(--pin-bg);
+    overflow:hidden;
+  }
+  .pin-head {
+    display:flex; align-items:center; justify-content:space-between; gap:6px;
+    padding:6px 12px;
+    background:color-mix(in srgb,var(--accent) 14%,transparent);
+    font-size:.67rem; font-weight:700; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--accent); user-select:none;
+  }
+  .pin-head-left { display:flex; align-items:center; gap:6px; }
+  .pin-edit-btn {
+    display:inline-flex; align-items:center; gap:4px;
+    padding:2px 8px; font-size:.62rem; font-weight:600;
+    letter-spacing:.04em; text-transform:none;
+    color:var(--accent); background:color-mix(in srgb,var(--accent) 12%,transparent);
+    border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);
+    border-radius:6px; cursor:pointer; transition:background .15s;
+  }
+  .pin-edit-btn:hover { background:color-mix(in srgb,var(--accent) 22%,transparent); }
+  .pin-preview {
+    padding:10px 12px; min-height:74px;
+    font-family:'DM Sans',sans-serif; font-size:.81rem; line-height:1.65;
+    color:var(--text); direction:rtl; text-align:right;
+    white-space:pre-wrap; word-break:break-word;
+    cursor:default; user-select:text;
+  }
+  .pin-preview.empty { color:var(--muted); font-style:italic; direction:ltr; text-align:left; }
+  .pin-actions {
+    display:flex; border-top:1px solid color-mix(in srgb,var(--accent) 18%,transparent);
+  }
+  .pin-copy {
+    flex:1;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    padding:6px 12px;
+    background:color-mix(in srgb,var(--accent) 9%,transparent);
+    border:none;
+    color:var(--accent);
+    font-family:'DM Sans',sans-serif; font-size:.72rem; font-weight:600;
+    cursor:pointer; transition:background .2s;
+  }
+  .pin-copy:hover  { background:color-mix(in srgb,var(--accent) 18%,transparent); }
+  .pin-copy.copied { color:#10b981; }
+
+  .template-textarea {
+    width:100%; min-height:160px; padding:12px;
+    font-family:'DM Sans',sans-serif; font-size:.88rem; line-height:1.65;
+    color:var(--text); background:var(--panel);
+    border:1px solid var(--border); border-radius:8px;
+    resize:vertical; outline:none; direction:rtl; text-align:right;
+  }
+  .template-textarea:focus { border-color:#3b82f650; }
+  .template-hint { font-size:.75rem; color:var(--muted); margin-top:8px; line-height:1.5; }
+
+  /* ── CARDS AREA ── */
+  .cards {
+    flex:1; display:flex; flex-direction:column;
+    gap:9px; padding:13px; min-height:50px;
+  }
+  .empty-hint {
+    display:flex; flex-direction:column; align-items:center;
+    justify-content:center; gap:7px; padding:28px 14px;
+    color:var(--muted); font-size:.78rem; text-align:center;
+    border:1.5px dashed #ffffff0e; border-radius:10px;
+    user-select:none; pointer-events:none; line-height:1.5;
+  }
+  .empty-hint svg { opacity:.28; }
+
+  /* ── CARD ── */
+  .card {
+    background:var(--card-bg);
+    border:1px solid color-mix(in srgb,var(--accent) 16%,transparent);
+    border-left:3px solid var(--accent);
+    border-radius:10px; padding:12px 13px;
+    cursor:grab;
+    transition:transform .18s, box-shadow .18s, opacity .18s;
+    user-select:none;
+  }
+  .card:hover {
+    transform:translateY(-2px);
+    box-shadow:0 8px 26px #00000055,
+               0 0 14px color-mix(in srgb,var(--accent) 12%,transparent);
+  }
+  .card.dragging { opacity:.38; transform:scale(.97) rotate(.4deg); box-shadow:none; cursor:grabbing; }
+  .card.card-hidden { display:none; }
+  .card.filtered-out { display:none; }
+
+  .card-top {
+    display:flex; align-items:flex-start; justify-content:space-between; gap:8px;
+    margin-bottom:8px;
+  }
+  .card-top .card-name { margin-bottom:0; flex:1; }
+  .card-tools { display:flex; gap:4px; flex-shrink:0; }
+  .card-tool {
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; padding:0;
+    background:var(--panel); color:var(--muted);
+    border:1px solid var(--border); border-radius:6px;
+    cursor:pointer; transition:all .15s;
+  }
+  .card-tool:hover { color:var(--text); border-color:#ffffff22; }
+  .card-tool.del:hover { color:#ef4444; border-color:#ef444440; }
+
+  .card-name {
+    font-family:'Syne',sans-serif; font-size:.85rem; font-weight:700;
+    color:var(--text); line-height:1.35; margin-bottom:8px;
+  }
+  .card-meta {
+    display:flex; align-items:center; gap:8px;
+    flex-wrap:wrap; margin-bottom:10px;
+  }
+  .card-phone {
+    display:flex; align-items:center; gap:5px;
+    font-size:.75rem; font-weight:500; color:var(--muted);
+    font-family:monospace; letter-spacing:.02em;
+  }
+  .card-phone svg { color:var(--accent); opacity:.65; flex-shrink:0; }
+
+  .badge {
+    display:inline-flex; align-items:center; gap:3px;
+    padding:2px 8px; border-radius:20px;
+    font-size:.66rem; font-weight:700; letter-spacing:.04em;
+    text-transform:uppercase; flex-shrink:0;
+  }
+  .badge-web   { background:#064e3b; color:#10b981; border:1px solid #10b98130; }
+  .badge-noweb { background:#3b1908; color:#f59e0b; border:1px solid #f59e0b30; }
+  .badge-activity {
+    background:#1e2230; color:var(--muted); border:1px solid var(--border);
+    text-transform:none; letter-spacing:0; font-weight:500;
+  }
+  .badge-activity.due { background:#3b1908; color:#f59e0b; border-color:#f59e0b30; }
+
+  .card-web-link {
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:.72rem; color:var(--accent); text-decoration:none;
+    margin-bottom:8px; opacity:.85; max-width:100%;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .card-web-link:hover { opacity:1; text-decoration:underline; }
+
+  .card-notes-wrap { margin-bottom:8px; }
+  .card-notes-toggle {
+    font-size:.72rem; color:var(--muted); cursor:pointer;
+    background:none; border:none; padding:0; font-family:inherit;
+    display:flex; align-items:center; gap:4px;
+  }
+  .card-notes-toggle:hover { color:var(--text); }
+  .card-notes {
+    width:100%; min-height:52px; margin-top:6px; padding:8px 10px;
+    font-family:'DM Sans',sans-serif; font-size:.76rem; line-height:1.5;
+    color:var(--text); background:var(--panel);
+    border:1px solid var(--border); border-radius:8px;
+    resize:vertical; outline:none;
+  }
+  .card-notes:focus { border-color:color-mix(in srgb,var(--accent) 40%,transparent); }
+
+  .card-follow-due {
+    display:flex; align-items:center; gap:6px; margin-bottom:8px;
+    font-size:.72rem; color:var(--muted);
+  }
+  .card-follow-due input {
+    padding:3px 8px; font-size:.72rem; font-family:inherit;
+    color:var(--text); background:var(--panel);
+    border:1px solid var(--border); border-radius:6px; outline:none;
+  }
+
+  .card-actions { display:flex; gap:7px; flex-wrap:wrap; }
+
+  .wa-btn {
+    flex:1; display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    padding:7px 10px; background:#128c7e; color:#fff;
+    font-family:'DM Sans',sans-serif; font-size:.78rem; font-weight:600;
+    border-radius:8px; text-decoration:none; border:none; cursor:pointer;
+    transition:background .18s, transform .1s;
+  }
+  .wa-btn:hover  { background:#25d366; }
+  .wa-btn:active { transform:scale(.96); }
+
+  .copy-link {
+    display:inline-flex; align-items:center; justify-content:center; gap:5px;
+    padding:7px 10px; background:var(--panel); color:var(--muted);
+    font-family:'DM Sans',sans-serif; font-size:.74rem; font-weight:500;
+    border-radius:8px; border:1px solid var(--border);
+    cursor:pointer; transition:all .18s; white-space:nowrap;
+  }
+  .copy-link:hover  { color:var(--text); border-color:#ffffff22; }
+  .copy-link.copied { color:#10b981; border-color:#10b98145; }
+
+  /* ── DROP PLACEHOLDER ── */
+  .drop-ph {
+    height:54px;
+    border:2px dashed color-mix(in srgb,var(--accent) 40%,transparent);
+    border-radius:10px;
+    background:color-mix(in srgb,var(--accent) 5%,transparent);
+    pointer-events:none;
+    animation:ph .75s ease-in-out infinite;
+  }
+  @keyframes ph { 0%,100%{opacity:.5} 50%{opacity:1} }
+
+  /* ── DIVIDER ── */
+  .divider {
+    flex-shrink:0; width:1px; align-self:stretch;
+    background:linear-gradient(to bottom,transparent,#ffffff15 20%,#ffffff15 80%,transparent);
+    margin:0 3px;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    writing-mode:vertical-rl;
+    text-orientation:mixed;
+    font-family:'Syne',sans-serif;
+    font-size:.65rem;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    opacity:.45;
+    align-self:center;
+    user-select:none;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position:fixed; bottom:26px; left:50%;
+    transform:translateX(-50%) translateY(80px);
+    background:#1e2230; color:var(--text);
+    border:1px solid #ffffff14; border-radius:30px;
+    padding:9px 22px; font-size:.82rem; font-weight:500;
+    box-shadow:0 14px 40px #00000090;
+    z-index:9999;
+    transition:transform .32s cubic-bezier(.34,1.56,.64,1), opacity .28s;
+    opacity:0; pointer-events:none;
+    display:flex; align-items:center; gap:8px;
+  }
+  .toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+  .toast.undo-toast { pointer-events:auto; cursor:pointer; }
+  .toast.undo-toast:hover { border-color:#3b82f650; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position:fixed; inset:0; background:#00000088;
+    display:flex; align-items:center; justify-content:center;
+    z-index:10000; padding:20px;
+    opacity:0; pointer-events:none; transition:opacity .2s;
+  }
+  .modal-overlay.open { opacity:1; pointer-events:auto; }
+  .modal {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:14px; width:100%; max-width:440px;
+    max-height:90vh; overflow-y:auto;
+    box-shadow:0 24px 60px #00000090;
+    transform:translateY(12px); transition:transform .2s;
+  }
+  .modal-overlay.open .modal { transform:translateY(0); }
+  .modal-head {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 20px 14px; border-bottom:1px solid var(--border);
+  }
+  .modal-head h2 {
+    font-family:'Syne',sans-serif; font-size:1rem; font-weight:700;
+  }
+  .modal-close {
+    background:none; border:none; color:var(--muted);
+    cursor:pointer; padding:4px; line-height:0;
+    border-radius:6px; transition:color .15s;
+  }
+  .modal-close:hover { color:var(--text); }
+  .modal-body { padding:18px 20px; }
+  .form-group { margin-bottom:14px; }
+  .form-group label {
+    display:block; font-size:.75rem; font-weight:600;
+    color:var(--muted); margin-bottom:5px;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width:100%; padding:9px 12px;
+    font-family:'DM Sans',sans-serif; font-size:.84rem;
+    color:var(--text); background:var(--panel);
+    border:1px solid var(--border); border-radius:8px; outline:none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color:#3b82f650;
+  }
+  .form-check { display:flex; align-items:center; gap:8px; }
+  .form-check input { width:auto; }
+  .form-check label { margin:0; color:var(--text); font-weight:500; }
+  .modal-foot {
+    display:flex; gap:8px; justify-content:flex-end;
+    padding:14px 20px 18px; border-top:1px solid var(--border);
+  }
+  .btn-primary {
+    padding:9px 18px; font-family:'DM Sans',sans-serif;
+    font-size:.83rem; font-weight:600; color:#fff;
+    background:var(--c1); border:none; border-radius:var(--radius);
+    cursor:pointer; transition:background .2s;
+  }
+  .btn-primary:hover { background:#2563eb; }
+  .btn-cancel {
+    padding:9px 18px; font-family:'DM Sans',sans-serif;
+    font-size:.83rem; font-weight:500; color:var(--muted);
+    background:var(--panel); border:1px solid var(--border);
+    border-radius:var(--radius); cursor:pointer;
+  }
+  .btn-cancel:hover { color:var(--text); }
+
+  .preview-table {
+    width:100%; border-collapse:collapse; font-size:.76rem; margin-top:10px;
+  }
+  .preview-table th, .preview-table td {
+    padding:6px 8px; text-align:left; border-bottom:1px solid var(--border);
+  }
+  .preview-table th { color:var(--muted); font-weight:600; }
+  .preview-meta { font-size:.78rem; color:var(--muted); line-height:1.5; }
+
+  .import-log {
+    font-size:.7rem; color:var(--muted); margin-top:8px;
+    padding-top:8px; border-top:1px solid var(--border);
+  }
+  .import-log div { margin-top:3px; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .board { flex-direction:column; overflow-x:visible; }
+    .col { flex:1 1 auto; width:100%; max-width:100%; }
+    .divider, .section-label { display:none; }
+    .search-input { width:140px; }
+    .search-input:focus { width:160px; }
+    .pills { display:none; }
+  }
+
+  ::-webkit-scrollbar { width:6px; height:6px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:#ffffff16; border-radius:10px; }
+  ::-webkit-scrollbar-thumb:hover { background:#ffffff2c; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-pip"></div>
+    Dental CRM <span style="opacity:.28;margin:0 5px">/</span> Sheikh Zayed
+  </div>
+
+  <div class="hdr-right">
+    <div class="search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" class="search-input" id="search-input" placeholder="Search clinics…" oninput="onSearch()" />
+    </div>
+
+    <div class="pills">
+      <div class="pill"><div class="pip" style="background:var(--c1)"></div> New · Web <b id="s1">0</b></div>
+      <div class="pill"><div class="pip" style="background:var(--c2)"></div> New · No Web <b id="s2">0</b></div>
+      <div class="pill"><div class="pip" style="background:var(--c3)"></div> Follow · Web <b id="s3">0</b></div>
+      <div class="pill"><div class="pip" style="background:var(--c4)"></div> Follow · No Web <b id="s4">0</b></div>
+    </div>
+
+    <button class="btn-secondary" onclick="openLeadModal()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add Lead
+    </button>
+
+    <button class="btn-secondary" onclick="exportJSON()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export JSON
+    </button>
+
+    <button class="btn-secondary" onclick="exportCSV()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export CSV
+    </button>
+
+    <button class="btn-clear" onclick="clearAll()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6m4-6v6"/><path d="M9 6V4h6v2"/></svg>
+      Clear All
+    </button>
+
+    <label class="btn-import">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Import CSV
+      <input type="file" accept=".csv" onchange="handleCSV(event)" />
+    </label>
+  </div>
+</header>
+<div class="board">
+
+  <!-- COL 1 — New Leads · Has Website -->
+  <div class="col" id="col-1"
+       style="--accent:var(--c1);--card-bg:var(--c1-card);--pin-bg:var(--c1-pin);"
+       ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'col-1')">
+    <div class="col-head">
+      <div class="col-title-row">
+        <div class="col-bar"></div>
+        <div class="col-title">New Leads <div class="col-sub">✓ Has Website</div></div>
+      </div>
+      <div class="col-count" id="cnt-col-1">0</div>
+    </div>
+    <div class="cards" id="cards-col-1">
+      <div class="empty-hint" id="empty-col-1">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Clinics with a website<br>will appear here on import
+      </div>
+    </div>
+  </div>
+
+  <!-- COL 2 — New Leads · No Website -->
+  <div class="col" id="col-2"
+       style="--accent:var(--c2);--card-bg:var(--c2-card);--pin-bg:var(--c2-pin);"
+       ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'col-2')">
+    <div class="col-head">
+      <div class="col-title-row">
+        <div class="col-bar"></div>
+        <div class="col-title">New Leads <div class="col-sub">✗ No Website</div></div>
+      </div>
+      <div class="col-count" id="cnt-col-2">0</div>
+    </div>
+    <div class="cards" id="cards-col-2">
+      <div class="empty-hint" id="empty-col-2">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Clinics without a website<br>will appear here on import
+      </div>
+    </div>
+  </div>
+
+  <!-- visual divider -->
+  <div class="divider"></div>
+  <div class="section-label">Follow&nbsp;Up</div>
+  <div class="divider"></div>
+
+  <!-- COL 3 — Need to Follow · Has Website -->
+  <div class="col" id="col-3"
+       style="--accent:var(--c3);--card-bg:var(--c3-card);--pin-bg:var(--c3-pin);"
+       ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'col-3')">
+    <div class="col-head">
+      <div class="col-title-row">
+        <div class="col-bar"></div>
+        <div class="col-title">Need to Follow <div class="col-sub">✓ Have Website</div></div>
+      </div>
+      <div class="col-count" id="cnt-col-3">0</div>
+    </div>
+
+    <div class="pin-box">
+      <div class="pin-head">
+        <div class="pin-head-left">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+          Pinned Template
+        </div>
+        <button class="pin-edit-btn" type="button" onclick="openTemplateModal('pin-3')">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit
+        </button>
+      </div>
+      <div class="pin-preview" id="pin-preview-3"></div>
+      <div class="pin-actions">
+        <button class="pin-copy" type="button" onclick="copyPin('pin-3',this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy Message
+        </button>
+      </div>
+    </div>
+
+    <div class="cards" id="cards-col-3">
+      <div class="empty-hint" id="empty-col-3">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Drag cards here<br>to begin follow-up
+      </div>
+    </div>
+  </div>
+
+  <!-- COL 4 — Need to Follow · No Website -->
+  <div class="col" id="col-4"
+       style="--accent:var(--c4);--card-bg:var(--c4-card);--pin-bg:var(--c4-pin);"
+       ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'col-4')">
+    <div class="col-head">
+      <div class="col-title-row">
+        <div class="col-bar"></div>
+        <div class="col-title">Need to Follow <div class="col-sub">✗ No Website</div></div>
+      </div>
+      <div class="col-count" id="cnt-col-4">0</div>
+    </div>
+
+    <div class="pin-box">
+      <div class="pin-head">
+        <div class="pin-head-left">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+          Pinned Template
+        </div>
+        <button class="pin-edit-btn" type="button" onclick="openTemplateModal('pin-4')">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit
+        </button>
+      </div>
+      <div class="pin-preview" id="pin-preview-4"></div>
+      <div class="pin-actions">
+        <button class="pin-copy" type="button" onclick="copyPin('pin-4',this)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copy Message
+        </button>
+      </div>
+    </div>
+
+    <div class="cards" id="cards-col-4">
+      <div class="empty-hint" id="empty-col-4">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Drag cards here<br>to begin follow-up
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="section-label">Archive</div>
+  <div class="divider"></div>
+
+  <!-- COL 5 — Won -->
+  <div class="col" id="col-5"
+       style="--accent:var(--c5);--card-bg:var(--c5-card);--pin-bg:var(--c5-pin);"
+       ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'col-5')">
+    <div class="col-head">
+      <div class="col-title-row">
+        <div class="col-bar"></div>
+        <div class="col-title">Won <div class="col-sub">✓ Closed deal</div></div>
+      </div>
+      <div class="col-count" id="cnt-col-5">0</div>
+    </div>
+    <div class="cards" id="cards-col-5">
+      <div class="empty-hint" id="empty-col-5">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><polyline points="20 6 9 17 4 12"/></svg>
+        Drag won deals here
+      </div>
+    </div>
+  </div>
+
+  <!-- COL 6 — Lost -->
+  <div class="col" id="col-6"
+       style="--accent:var(--c6);--card-bg:var(--c6-card);--pin-bg:var(--c6-pin);"
+       ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'col-6')">
+    <div class="col-head">
+      <div class="col-title-row">
+        <div class="col-bar"></div>
+        <div class="col-title">Lost <div class="col-sub">✗ No deal</div></div>
+      </div>
+      <div class="col-count" id="cnt-col-6">0</div>
+    </div>
+    <div class="cards" id="cards-col-6">
+      <div class="empty-hint" id="empty-col-6">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        Drag lost deals here
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TEMPLATE MODAL -->
+<div class="modal-overlay" id="template-modal" onclick="if(event.target===this)closeTemplateModal()">
+  <div class="modal" role="dialog" style="max-width:520px">
+    <div class="modal-head">
+      <h2 id="template-modal-title">Edit Template</h2>
+      <button class="modal-close" onclick="closeTemplateModal()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <textarea class="template-textarea" id="template-editor" placeholder="Write your follow-up message…"></textarea>
+      <p class="template-hint">This message is pre-filled when you click <strong>WhatsApp + Message</strong> on cards in this column. Changes are saved automatically when you click Save.</p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" type="button" onclick="resetTemplate()">Reset default</button>
+      <button class="btn-cancel" type="button" onclick="closeTemplateModal()">Cancel</button>
+      <button class="btn-primary" type="button" onclick="saveTemplateModal()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEAD MODAL -->
+<div class="modal-overlay" id="lead-modal" onclick="if(event.target===this)closeLeadModal()">
+  <div class="modal" role="dialog">
+    <div class="modal-head">
+      <h2 id="lead-modal-title">Add Lead</h2>
+      <button class="modal-close" onclick="closeLeadModal()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="lead-edit-id" />
+      <div class="form-group">
+        <label for="lead-name">Clinic Name</label>
+        <input type="text" id="lead-name" placeholder="Clinic name" />
+      </div>
+      <div class="form-group">
+        <label for="lead-phone">Phone</label>
+        <input type="tel" id="lead-phone" placeholder="01xxxxxxxxx" />
+      </div>
+      <div class="form-group">
+        <label for="lead-weburl">Website URL</label>
+        <input type="url" id="lead-weburl" placeholder="https://..." />
+      </div>
+      <div class="form-group">
+        <div class="form-check">
+          <input type="checkbox" id="lead-hasweb" />
+          <label for="lead-hasweb">Has website</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lead-column">Column</label>
+        <select id="lead-column">
+          <option value="col-1">New Leads · Has Website</option>
+          <option value="col-2">New Leads · No Website</option>
+          <option value="col-3">Need to Follow · Has Website</option>
+          <option value="col-4">Need to Follow · No Website</option>
+          <option value="col-5">Won</option>
+          <option value="col-6">Lost</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="lead-notes">Notes</label>
+        <textarea id="lead-notes" rows="3" placeholder="Optional notes…"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="lead-follow-due">Follow-up due (optional)</label>
+        <input type="date" id="lead-follow-due" />
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeLeadModal()">Cancel</button>
+      <button class="btn-primary" onclick="saveLeadModal()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT PREVIEW MODAL -->
+<div class="modal-overlay" id="import-modal" onclick="if(event.target===this)closeImportModal()">
+  <div class="modal" role="dialog">
+    <div class="modal-head">
+      <h2>Import Preview</h2>
+      <button class="modal-close" onclick="closeImportModal()" aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="preview-meta" id="import-preview-meta"></div>
+      <table class="preview-table" id="import-preview-table">
+        <thead><tr><th>Name</th><th>Phone</th><th>Website</th></tr></thead>
+        <tbody id="import-preview-body"></tbody>
+      </table>
+      <div class="import-log" id="import-log"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeImportModal()">Cancel</button>
+      <button class="btn-primary" onclick="commitImport()">Import</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-msg"></span>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   STATE & PERSISTENCE
+═══════════════════════════════════════════ */
+const STORAGE_KEY = 'dental-crm-v1';
+const COLUMN_IDS = ['col-1','col-2','col-3','col-4','col-5','col-6'];
+const COLUMN_LABELS = {
+  'col-1': 'New Leads · Has Website',
+  'col-2': 'New Leads · No Website',
+  'col-3': 'Need to Follow · Has Website',
+  'col-4': 'Need to Follow · No Website',
+  'col-5': 'Won',
+  'col-6': 'Lost'
+};
+const FOLLOW_COLS = new Set(['col-3','col-4']);
+
+const DEFAULT_TEMPLATES = {
+  'pin-3': 'مساء الخير يا فندم.. تذكير سريع بخصوص الاقتراح الإداري لسيستم الحجوزات الأوتوماتيك لتقليل المواعيد الفائتة. هل كان في فرصة الإدارة تطلع عليه؟',
+  'pin-4': 'مساء الخير يا فندم.. تذكير سريع بخصوص الاقتراح الإداري لسيستم الحجوزات وتصميم الويب سايت الرسمي. هل كان في فرصة الإدارة تطلع عليه؟'
+};
+
+const PIN_TO_COL = { 'pin-3': 'col-3', 'pin-4': 'col-4' };
+
+let draggedCard = null;
+let placeholder = null;
+let saveTimer = null;
+let undoSnapshot = null;
+let undoTimer = null;
+let pendingImport = null;
+let editingTemplateId = null;
+
+const appState = {
+  columns: Object.fromEntries(COLUMN_IDS.map(id => [id, []])),
+  templates: {},
+  importHistory: []
+};
+
+function genId() {
+  return 'lead_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7);
+}
+
+function createLead(data) {
+  return {
+    id: data.id || genId(),
+    name: data.name || '',
+    phone: normalizePhone(data.phone || ''),
+    hasWeb: !!data.hasWeb,
+    webUrl: data.webUrl || '',
+    notes: data.notes || '',
+    lastContacted: data.lastContacted || null,
+    followUpDue: data.followUpDue || null,
+    createdAt: data.createdAt || new Date().toISOString()
+  };
+}
+
+function normalizePhone(raw) {
+  let p = (raw || '').replace(/[\s\-\.\(\)]/g, '').replace(/[^\d+]/g, '');
+  if (!p) return '';
+  if (p.startsWith('+')) p = p.slice(1);
+  if (p.startsWith('00')) p = p.slice(2);
+  if (p.startsWith('0') && p.length === 11) p = '20' + p.slice(1);
+  else if (!p.startsWith('20') && p.length === 10) p = '20' + p;
+  return p;
+}
+
+function phoneKey(phone) {
+  return normalizePhone(phone);
+}
+
+function getAllPhoneKeys() {
+  const keys = new Set();
+  COLUMN_IDS.forEach(colId => {
+    appState.columns[colId].forEach(lead => keys.add(phoneKey(lead.phone)));
+  });
+  return keys;
+}
+
+function findLeadById(id) {
+  for (const colId of COLUMN_IDS) {
+    const lead = appState.columns[colId].find(l => l.id === id);
+    if (lead) return { lead, colId };
+  }
+  return null;
+}
+
+function getStateSnapshot() {
+  return JSON.parse(JSON.stringify(appState));
+}
+
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveState, 300);
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+  } catch (e) {
+    toast('Could not save — storage may be full', '⚠️');
+  }
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    COLUMN_IDS.forEach(id => {
+      appState.columns[id] = (data.columns?.[id] || []).map(createLead);
+    });
+    appState.templates = data.templates || {};
+    appState.importHistory = data.importHistory || [];
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+function syncStateFromDOM() {
+  COLUMN_IDS.forEach(colId => {
+    const area = document.getElementById('cards-' + colId);
+    const ids = [...area.querySelectorAll('.card')].map(c => c.dataset.id);
+    const map = new Map(appState.columns[colId].map(l => [l.id, l]));
+    appState.columns[colId] = ids.map(id => map.get(id)).filter(Boolean);
+  });
+}
+
+function getTemplate(pinId) {
+  return appState.templates[pinId] ?? DEFAULT_TEMPLATES[pinId] ?? '';
+}
+
+function setTemplate(pinId, text) {
+  appState.templates[pinId] = text;
+  renderPinPreview(pinId);
+  scheduleSave();
+}
+
+function renderPinPreview(pinId) {
+  const previewId = pinId.replace('pin-', 'pin-preview-');
+  const el = document.getElementById(previewId);
+  if (!el) return;
+  const text = getTemplate(pinId);
+  if (text) {
+    el.textContent = text;
+    el.classList.remove('empty');
+  } else {
+    el.textContent = 'No template yet — click Edit to add one';
+    el.classList.add('empty');
+  }
+}
+
+function renderPinPreviews() {
+  renderPinPreview('pin-3');
+  renderPinPreview('pin-4');
+}
+
+function refreshColumnCards(colId) {
+  const area = document.getElementById('cards-' + colId);
+  const cards = [...area.querySelectorAll('.card')];
+  cards.forEach(card => {
+    const found = findLeadById(card.dataset.id);
+    if (found) card.replaceWith(makeCard(found.lead, colId));
+  });
+  applySearch();
+}
+
+function openTemplateModal(pinId) {
+  editingTemplateId = pinId;
+  const titles = {
+    'pin-3': 'Follow-up · Has Website',
+    'pin-4': 'Follow-up · No Website'
+  };
+  document.getElementById('template-modal-title').textContent =
+    'Edit Template — ' + (titles[pinId] || '');
+  document.getElementById('template-editor').value = getTemplate(pinId);
+  document.getElementById('template-modal').classList.add('open');
+  setTimeout(() => document.getElementById('template-editor').focus(), 100);
+}
+
+function closeTemplateModal() {
+  document.getElementById('template-modal').classList.remove('open');
+  editingTemplateId = null;
+}
+
+function saveTemplateModal() {
+  if (!editingTemplateId) return;
+  const text = document.getElementById('template-editor').value.trim();
+  setTemplate(editingTemplateId, text);
+  const colId = PIN_TO_COL[editingTemplateId];
+  if (colId) refreshColumnCards(colId);
+  closeTemplateModal();
+  toast('Template saved', '✅');
+}
+
+function resetTemplate() {
+  if (!editingTemplateId) return;
+  if (!confirm('Reset this template to the default message?')) return;
+  document.getElementById('template-editor').value = DEFAULT_TEMPLATES[editingTemplateId] || '';
+}
+
+function renderBoard() {
+  COLUMN_IDS.forEach(colId => {
+    const area = document.getElementById('cards-' + colId);
+    area.querySelectorAll('.card').forEach(c => c.remove());
+    appState.columns[colId].forEach(lead => {
+      area.appendChild(makeCard(lead, colId));
+    });
+  });
+  applySearch();
+  updateCounts();
+}
+
+function renderImportLog() {
+  const el = document.getElementById('import-log');
+  if (!el) return;
+  if (!appState.importHistory.length) { el.innerHTML = ''; return; }
+  el.innerHTML = '<strong>Recent imports</strong>' +
+    appState.importHistory.slice(0, 3).map(h =>
+      `<div>${esc(h.file)} — ${h.added} added${h.duplicates ? ', ' + h.duplicates + ' dupes' : ''} · ${new Date(h.at).toLocaleDateString()}</div>`
+    ).join('');
+}
+
+/* ═══════════════════════════════════════════
+   CSV IMPORT
+═══════════════════════════════════════════ */
+function handleCSV(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    showImportPreview(ev.target.result, file.name);
+    e.target.value = '';
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+function parseCSVLine(line) {
+  const out = []; let cur = ''; let inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"') {
+      inQ && line[i+1]==='"' ? (cur+='"', i++) : (inQ = !inQ);
+    } else if (c === ',' && !inQ) {
+      out.push(cur.trim()); cur = '';
+    } else cur += c;
+  }
+  out.push(cur.trim());
+  return out;
+}
+
+function findCol(headers, keys) {
+  const h = headers.map(x => x.toLowerCase().replace(/\s+/g,' ').trim());
+  for (const k of keys) {
+    const i = h.findIndex(x => x.includes(k));
+    if (i !== -1) return i;
+  }
+  return -1;
+}
+
+function parseCSVRows(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (lines.length < 2) return null;
+
+  const header = parseCSVLine(lines[0]);
+  const iName   = Math.max(findCol(header, ['qbf1pd','name','clinic','اسم']), 0);
+  const iPhone  = findCol(header, ['usdlk','phone','هاتف','موبايل','رقم']) !== -1
+                    ? findCol(header, ['usdlk','phone','هاتف','موبايل','رقم']) : 4;
+  const iWebUrl = findCol(header, ['lcr4fd href','website url','url','link']) !== -1
+                    ? findCol(header, ['lcr4fd href','website url','url','link']) : 5;
+  const iWebS   = findCol(header, ['r8c4qb','website status','has website']) !== -1
+                    ? findCol(header, ['r8c4qb','website status','has website']) : 6;
+
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const cols   = parseCSVLine(lines[i]);
+    const name   = (cols[iName]   || '').replace(/^"|"$/g,'').trim();
+    const rawPh  = (cols[iPhone]  || '').replace(/^"|"$/g,'').trim();
+    const phone  = normalizePhone(rawPh);
+    const webUrl = (cols[iWebUrl] || '').replace(/^"|"$/g,'').trim();
+    const webS   = (cols[iWebS]   || '').replace(/^"|"$/g,'').trim().toLowerCase();
+    if (!name) continue;
+    const hasWeb = webS === 'website' || webUrl.startsWith('http');
+    rows.push({ name, phone, webUrl, hasWeb });
+  }
+  return { header, rows };
+}
+
+function showImportPreview(text, fileName) {
+  const parsed = parseCSVRows(text);
+  if (!parsed || !parsed.rows.length) {
+    toast('CSV appears empty or invalid', '⚠️');
+    return;
+  }
+
+  const existing = getAllPhoneKeys();
+  let wouldAdd = 0, wouldDupe = 0, noPhone = 0;
+  parsed.rows.forEach(r => {
+    if (!r.phone) { noPhone++; return; }
+    if (existing.has(phoneKey(r.phone))) wouldDupe++;
+    else wouldAdd++;
+  });
+
+  pendingImport = { text, fileName, parsed };
+
+  document.getElementById('import-preview-meta').innerHTML =
+    `<strong>${esc(fileName)}</strong> — ${parsed.rows.length} rows found<br>` +
+    `Will add <b>${wouldAdd}</b> · skip <b>${wouldDupe}</b> duplicates · <b>${noPhone}</b> without phone`;
+
+  const tbody = document.getElementById('import-preview-body');
+  tbody.innerHTML = parsed.rows.slice(0, 5).map(r =>
+    `<tr><td>${esc(r.name)}</td><td>${esc(r.phone || '—')}</td><td>${r.hasWeb ? '✓' : '✗'}</td></tr>`
+  ).join('');
+
+  renderImportLog();
+  document.getElementById('import-modal').classList.add('open');
+}
+
+function closeImportModal() {
+  document.getElementById('import-modal').classList.remove('open');
+  pendingImport = null;
+}
+
+function commitImport() {
+  if (!pendingImport) return;
+  const { parsed, fileName } = pendingImport;
+  const existing = getAllPhoneKeys();
+  let added = 0, duplicates = 0, skipped = 0;
+
+  parsed.rows.forEach(r => {
+    if (!r.phone) { skipped++; return; }
+    const key = phoneKey(r.phone);
+    if (existing.has(key)) { duplicates++; return; }
+    existing.add(key);
+    const colId = r.hasWeb ? 'col-1' : 'col-2';
+    const lead = createLead({ name: r.name, phone: r.phone, hasWeb: r.hasWeb, webUrl: r.webUrl });
+    appState.columns[colId].push(lead);
+    added++;
+  });
+
+  appState.importHistory.unshift({
+    file: fileName, added, duplicates, skipped, at: new Date().toISOString()
+  });
+  appState.importHistory = appState.importHistory.slice(0, 10);
+
+  renderBoard();
+  scheduleSave();
+  closeImportModal();
+
+  if (!added) {
+    toast('No new clinics added (all duplicates or missing phones)', '⚠️');
+    return;
+  }
+  let msg = `${added} clinics imported`;
+  if (duplicates) msg += ` · ${duplicates} duplicates skipped`;
+  if (skipped) msg += ` · ${skipped} no phone`;
+  toast(msg, '✅');
+}
+
+/* ═══════════════════════════════════════════
+   CARD BUILDER
+═══════════════════════════════════════════ */
+function buildWALink(lead, colId) {
+  const phone = lead.phone.replace(/^\+/, '');
+  let url = `https://api.whatsapp.com/send?phone=${phone}`;
+  if (FOLLOW_COLS.has(colId)) {
+    const pinId = colId === 'col-3' ? 'pin-3' : 'pin-4';
+    const tpl = getTemplate(pinId);
+    if (tpl) url += `&text=${encodeURIComponent(tpl)}`;
+  }
+  return url;
+}
+
+function formatActivity(lead) {
+  const parts = [];
+  if (lead.lastContacted) {
+    const days = Math.floor((Date.now() - new Date(lead.lastContacted)) / 86400000);
+    parts.push(days === 0 ? 'Contacted today' : `Contacted ${days}d ago`);
+  }
+  if (lead.followUpDue) {
+    const due = new Date(lead.followUpDue + 'T00:00:00');
+    const today = new Date(); today.setHours(0,0,0,0);
+    const diff = Math.round((due - today) / 86400000);
+    if (diff < 0) parts.push(`Overdue ${Math.abs(diff)}d`);
+    else if (diff === 0) parts.push('Due today');
+    else if (diff <= 7) parts.push(`Due in ${diff}d`);
+  }
+  return parts;
+}
+
+function makeCard(lead, colId) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.draggable = true;
+  card.dataset.id = lead.id;
+
+  const waLink = buildWALink(lead, colId);
+  const activity = formatActivity(lead);
+  const showFollowDue = FOLLOW_COLS.has(colId);
+  const webLinkHtml = lead.hasWeb && lead.webUrl
+    ? `<a class="card-web-link" href="${esc(lead.webUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        ${esc(lead.webUrl.replace(/^https?:\/\//,'').slice(0, 40))}
+      </a>` : '';
+
+  const activityHtml = activity.length
+    ? activity.map((t, i) => {
+        const isDue = t.includes('Due') || t.includes('Overdue');
+        return `<span class="badge badge-activity${isDue ? ' due' : ''}">${esc(t)}</span>`;
+      }).join(' ')
+    : '';
+
+  card.innerHTML = `
+    <div class="card-top">
+      <div class="card-name">${esc(lead.name)}</div>
+      <div class="card-tools">
+        <button class="card-tool" title="Edit" onclick="openLeadModal('${lead.id}');event.stopPropagation()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
+        <button class="card-tool del" title="Delete" onclick="deleteLead('${lead.id}');event.stopPropagation()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="card-meta">
+      <div class="card-phone">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.22 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.28-.54a2 2 0 012.11.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+        ${esc(lead.phone)}
+      </div>
+      <span class="badge ${lead.hasWeb ? 'badge-web':'badge-noweb'}">${lead.hasWeb ? '✓ Website':'✗ No Website'}</span>
+      ${activityHtml}
+    </div>
+    ${webLinkHtml}
+    ${showFollowDue ? `
+    <div class="card-follow-due">
+      <span>Follow-up:</span>
+      <input type="date" value="${lead.followUpDue || ''}" onchange="updateFollowDue('${lead.id}',this.value);event.stopPropagation()" onclick="event.stopPropagation()" />
+    </div>` : ''}
+    <div class="card-notes-wrap">
+      <button class="card-notes-toggle" onclick="toggleNotes('${lead.id}');event.stopPropagation()">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Notes${lead.notes ? ' ·' : ''}
+      </button>
+      <textarea class="card-notes" id="notes-${lead.id}" style="display:${lead.notes ? 'block' : 'none'}"
+        placeholder="Add notes…" oninput="updateNotes('${lead.id}',this.value);event.stopPropagation()"
+        onclick="event.stopPropagation()">${esc(lead.notes)}</textarea>
+    </div>
+    <div class="card-actions">
+      <a class="wa-btn" href="${esc(waLink)}" target="_blank" rel="noopener"
+         onclick="onWAClick('${lead.id}');event.stopPropagation()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.127 1.535 5.857L.057 23.215a.75.75 0 00.928.928l5.358-1.478A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.697 9.697 0 01-4.932-1.347l-.354-.21-3.678 1.014 1.015-3.679-.21-.354A9.697 9.697 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+        </svg>
+        ${FOLLOW_COLS.has(colId) ? 'WhatsApp + Message' : 'WhatsApp'}
+      </a>
+      <button class="copy-link" data-wa="${esc(waLink)}" onclick="copyWABtn(this);event.stopPropagation()">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy Link
+      </button>
+    </div>`;
+
+  card.addEventListener('dragstart', onDragStart);
+  card.addEventListener('dragend',   onDragEnd);
+  return card;
+}
+
+function esc(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function toggleNotes(id) {
+  const ta = document.getElementById('notes-' + id);
+  if (ta) ta.style.display = ta.style.display === 'none' ? 'block' : 'none';
+}
+
+function updateNotes(id, value) {
+  const found = findLeadById(id);
+  if (!found) return;
+  found.lead.notes = value;
+  scheduleSave();
+}
+
+function updateFollowDue(id, value) {
+  const found = findLeadById(id);
+  if (!found) return;
+  found.lead.followUpDue = value || null;
+  scheduleSave();
+  const colId = found.colId;
+  const card = document.querySelector(`.card[data-id="${id}"]`);
+  if (card) card.replaceWith(makeCard(found.lead, colId));
+  applySearch();
+}
+
+function onWAClick(id) {
+  const found = findLeadById(id);
+  if (!found) return;
+  found.lead.lastContacted = new Date().toISOString();
+  scheduleSave();
+  const card = document.querySelector(`.card[data-id="${id}"]`);
+  if (card) card.replaceWith(makeCard(found.lead, found.colId));
+  applySearch();
+}
+
+/* ═══════════════════════════════════════════
+   DRAG & DROP — unchanged core logic
+═══════════════════════════════════════════ */
+function onDragStart(e) {
+  draggedCard = this;
+  this.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain','');
+}
+
+function onDragEnd() {
+  if (draggedCard) draggedCard.classList.remove('dragging');
+  removePH();
+  document.querySelectorAll('.col').forEach(c => c.classList.remove('drag-over'));
+  draggedCard = null;
+}
+
+function onDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  if (!draggedCard) return;
+
+  const col  = e.currentTarget;
+  const area = col.querySelector('.cards');
+  col.classList.add('drag-over');
+
+  const cards = [...area.querySelectorAll('.card:not(.dragging)')];
+  let target = null;
+  for (const c of cards) {
+    const r = c.getBoundingClientRect();
+    if (e.clientY < r.top + r.height / 2) { target = c; break; }
+  }
+
+  if (!placeholder) {
+    placeholder = document.createElement('div');
+    placeholder.className = 'drop-ph';
+  }
+  target ? area.insertBefore(placeholder, target) : area.appendChild(placeholder);
+}
+
+function onDragLeave(e) {
+  if (!e.currentTarget.contains(e.relatedTarget))
+    e.currentTarget.classList.remove('drag-over');
+}
+
+function onDrop(e, colId) {
+  e.preventDefault();
+  if (!draggedCard) return;
+  const area = document.getElementById('cards-' + colId);
+  const leadId = draggedCard.dataset.id;
+  const oldColId = findLeadById(leadId)?.colId;
+  placeholder?.parentNode === area
+    ? area.insertBefore(draggedCard, placeholder)
+    : area.appendChild(draggedCard);
+  removePH();
+  document.querySelectorAll('.col').forEach(c => c.classList.remove('drag-over'));
+  syncStateFromDOM();
+  if (oldColId && oldColId !== colId) {
+    const found = findLeadById(leadId);
+    if (found) draggedCard.replaceWith(makeCard(found.lead, colId));
+  }
+  scheduleSave();
+  updateCounts();
+}
+
+function removePH() {
+  if (placeholder?.parentNode) placeholder.parentNode.removeChild(placeholder);
+  placeholder = null;
+}
+
+/* ═══════════════════════════════════════════
+   COUNTS & EMPTY STATES
+═══════════════════════════════════════════ */
+function updateCounts() {
+  COLUMN_IDS.forEach((id, i) => {
+    const area  = document.getElementById('cards-' + id);
+    const all   = area.querySelectorAll('.card').length;
+    const visible = area.querySelectorAll('.card:not(.filtered-out)').length;
+    const q = document.getElementById('search-input')?.value.trim();
+    document.getElementById('cnt-' + id).textContent = q && visible !== all ? `${visible}/${all}` : all;
+    const empty = document.getElementById('empty-' + id);
+    if (empty) empty.style.display = all ? 'none' : '';
+    if (i < 4) document.getElementById('s' + (i+1)).textContent = all;
+  });
+}
+
+function onSearch() {
+  applySearch();
+  updateCounts();
+}
+
+function applySearch() {
+  const q = (document.getElementById('search-input')?.value || '').trim().toLowerCase();
+  document.querySelectorAll('.card').forEach(card => {
+    const id = card.dataset.id;
+    const found = findLeadById(id);
+    if (!found) return;
+    const { lead } = found;
+    const match = !q ||
+      lead.name.toLowerCase().includes(q) ||
+      lead.phone.includes(q) ||
+      (lead.notes || '').toLowerCase().includes(q);
+    card.classList.toggle('filtered-out', !match);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   LEAD CRUD & MODAL
+═══════════════════════════════════════════ */
+function openLeadModal(editId) {
+  const modal = document.getElementById('lead-modal');
+  document.getElementById('lead-edit-id').value = editId || '';
+  document.getElementById('lead-modal-title').textContent = editId ? 'Edit Lead' : 'Add Lead';
+
+  if (editId) {
+    const found = findLeadById(editId);
+    if (!found) return;
+    const { lead, colId } = found;
+    document.getElementById('lead-name').value = lead.name;
+    document.getElementById('lead-phone').value = lead.phone;
+    document.getElementById('lead-weburl').value = lead.webUrl;
+    document.getElementById('lead-hasweb').checked = lead.hasWeb;
+    document.getElementById('lead-column').value = colId;
+    document.getElementById('lead-notes').value = lead.notes;
+    document.getElementById('lead-follow-due').value = lead.followUpDue || '';
+  } else {
+    document.getElementById('lead-name').value = '';
+    document.getElementById('lead-phone').value = '';
+    document.getElementById('lead-weburl').value = '';
+    document.getElementById('lead-hasweb').checked = false;
+    document.getElementById('lead-column').value = 'col-2';
+    document.getElementById('lead-notes').value = '';
+    document.getElementById('lead-follow-due').value = '';
+  }
+  modal.classList.add('open');
+  setTimeout(() => document.getElementById('lead-name').focus(), 100);
+}
+
+function closeLeadModal() {
+  document.getElementById('lead-modal').classList.remove('open');
+}
+
+function saveLeadModal() {
+  const editId = document.getElementById('lead-edit-id').value;
+  const name = document.getElementById('lead-name').value.trim();
+  const phone = normalizePhone(document.getElementById('lead-phone').value.trim());
+  const webUrl = document.getElementById('lead-weburl').value.trim();
+  const hasWeb = document.getElementById('lead-hasweb').checked || webUrl.startsWith('http');
+  const colId = document.getElementById('lead-column').value;
+  const notes = document.getElementById('lead-notes').value;
+  const followUpDue = document.getElementById('lead-follow-due').value || null;
+
+  if (!name) { toast('Name is required', '⚠️'); return; }
+  if (!phone) { toast('Phone is required', '⚠️'); return; }
+
+  const key = phoneKey(phone);
+
+  if (editId) {
+    const found = findLeadById(editId);
+    if (!found) return;
+    const dup = COLUMN_IDS.some(cid =>
+      appState.columns[cid].some(l => l.id !== editId && phoneKey(l.phone) === key)
+    );
+    if (dup) { toast('Another lead already has this phone', '⚠️'); return; }
+
+    Object.assign(found.lead, { name, phone, webUrl, hasWeb, notes, followUpDue });
+    appState.columns[found.colId] = appState.columns[found.colId].filter(l => l.id !== editId);
+    appState.columns[colId].push(found.lead);
+  } else {
+    if (getAllPhoneKeys().has(key)) {
+      toast('Lead with this phone already exists', '⚠️');
+      return;
+    }
+    const lead = createLead({ name, phone, webUrl, hasWeb, notes, followUpDue });
+    appState.columns[colId].push(lead);
+  }
+
+  renderBoard();
+  scheduleSave();
+  closeLeadModal();
+  toast(editId ? 'Lead updated' : 'Lead added', '✅');
+}
+
+function deleteLead(id) {
+  const found = findLeadById(id);
+  if (!found) return;
+  if (!confirm(`Delete "${found.lead.name}"?`)) return;
+  appState.columns[found.colId] = appState.columns[found.colId].filter(l => l.id !== id);
+  renderBoard();
+  scheduleSave();
+  toast('Lead deleted', '🗑️');
+}
+
+/* ═══════════════════════════════════════════
+   EXPORT
+═══════════════════════════════════════════ */
+function downloadFile(content, filename, mime) {
+  const blob = new Blob([content], { type: mime });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function exportJSON() {
+  const data = getStateSnapshot();
+  data.exportedAt = new Date().toISOString();
+  downloadFile(JSON.stringify(data, null, 2), `dental-crm-${Date.now()}.json`, 'application/json');
+  toast('JSON backup downloaded', '✅');
+}
+
+function exportCSV() {
+  const rows = [['Name','Phone','Has Website','Website URL','Column','Notes','Last Contacted','Follow-up Due']];
+  COLUMN_IDS.forEach(colId => {
+    appState.columns[colId].forEach(lead => {
+      rows.push([
+        lead.name, lead.phone, lead.hasWeb ? 'Yes' : 'No', lead.webUrl,
+        COLUMN_LABELS[colId], lead.notes,
+        lead.lastContacted ? lead.lastContacted.slice(0, 10) : '',
+        lead.followUpDue || ''
+      ]);
+    });
+  });
+  const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  downloadFile('\uFEFF' + csv, `dental-crm-${Date.now()}.csv`, 'text/csv');
+  toast('CSV exported', '✅');
+}
+
+/* ═══════════════════════════════════════════
+   ACTIONS
+═══════════════════════════════════════════ */
+function copyWABtn(btn) {
+  const link = btn.dataset.wa;
+  navigator.clipboard.writeText(link).then(() => {
+    btn.classList.add('copied');
+    const orig = btn.innerHTML;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
+  });
+}
+
+function copyPin(pinId, btn) {
+  navigator.clipboard.writeText(getTemplate(pinId)).then(() => {
+    btn.classList.add('copied');
+    btn.textContent = '✓ Copied!';
+    toast('Template copied to clipboard','✅');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy Message`;
+    }, 2000);
+  });
+}
+
+function clearAll() {
+  const total = COLUMN_IDS.reduce((n, id) => n + appState.columns[id].length, 0);
+  if (!total) { toast('Board is already empty', '⚠️'); return; }
+  if (!confirm('Clear all cards from all columns?')) return;
+
+  undoSnapshot = getStateSnapshot();
+  COLUMN_IDS.forEach(id => { appState.columns[id] = []; });
+  renderBoard();
+  scheduleSave();
+  showUndoToast('Board cleared — click to undo');
+}
+
+function showUndoToast(msg) {
+  const el = document.getElementById('toast');
+  el.classList.add('undo-toast');
+  document.getElementById('toast-msg').textContent = '↩  ' + msg;
+  el.classList.add('show');
+  clearTimeout(undoTimer);
+  clearTimeout(_tt);
+  undoTimer = setTimeout(() => {
+    el.classList.remove('show', 'undo-toast');
+    undoSnapshot = null;
+  }, 5000);
+  el.onclick = () => {
+    if (!undoSnapshot) return;
+    Object.assign(appState, undoSnapshot);
+    renderBoard();
+    renderPinPreviews();
+    scheduleSave();
+    undoSnapshot = null;
+    el.classList.remove('show', 'undo-toast');
+    el.onclick = null;
+    toast('Restored', '✅');
+  };
+}
+
+/* ═══════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════ */
+let _tt = null;
+function toast(msg, icon='✅') {
+  const el = document.getElementById('toast');
+  el.classList.remove('undo-toast');
+  el.onclick = null;
+  document.getElementById('toast-msg').textContent = (icon ? icon+'  ' : '') + msg;
+  el.classList.add('show');
+  clearTimeout(_tt);
+  _tt = setTimeout(() => el.classList.remove('show'), 3600);
+}
+
+/* ═══════════════════════════════════════════
+   KEYBOARD & INIT
+═══════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) {
+    e.preventDefault();
+    document.getElementById('search-input').focus();
+  }
+  if (e.key === 'Escape') {
+    closeLeadModal();
+    closeImportModal();
+    closeTemplateModal();
+  }
+});
+
+function init() {
+  const loaded = loadState();
+  if (!appState.templates['pin-3']) appState.templates['pin-3'] = DEFAULT_TEMPLATES['pin-3'];
+  if (!appState.templates['pin-4']) appState.templates['pin-4'] = DEFAULT_TEMPLATES['pin-4'];
+  if (loaded) {
+    renderBoard();
+  } else {
+    updateCounts();
+  }
+  renderPinPreviews();
+  renderImportLog();
+}
+
+init();
+</script>
+</body>
+</html>
